@@ -31,7 +31,14 @@ def get_all_pdfs_paths(directory: str) -> list[str]:
 
 
 def load_and_index_many(pdf_paths: list[str], metadata_list: list[dict], persist_dir: str = "chroma_store") -> Chroma:
+    # Use RecursiveCharacterTextSplitter to split text into manageable chunks for embedding
+    # it tries to split on larger separators (like paragraphs, then sentences, then words)
+    # to keep chunks as coherent as possible, only splitting smaller when necessary.
     splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
+
+    # The function uses the 'intfloat/e5-base-v2' model from HuggingFace for generating embeddings. This model is chosen because
+    # it is a strong general-purpose embedding model, optimized for semantic search and retrieval tasks, providing high-quality
+    # vector representations for text chunks.
     emb_model = HuggingFaceEmbeddings(model_name="intfloat/e5-base-v2")
     logger.info(f"Initializing text models: {splitter} and {emb_model}.")
     texts, ids, metadatas = [], [], []

@@ -5,3 +5,5 @@ How to run:
 4. Run `uv sync --extra dev`
 5. Run `uv run src/test_task/build_index.py --kb_dir <path/to/domaindata>`
 6. Run `uv run src/test_task/main.py --persist_dir <path/to/chroma_store> --top_k <k-candidates>`
+
+or build and run docker container `docker run --rm -it $(docker build -q .)`
