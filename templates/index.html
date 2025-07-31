@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test Task</title></head>
+<body>
+  <h2>Test Task</h2>
+  <form method="post">
+    <input name="question" style="width: 60%;" placeholder="Your question" required />
+    <br/>
+    <label>Date (YYYY-MM-DD): <input name="date"/></label>
+    <input type="submit" value="Ask"/>
+  </form>
+
+  {% if answer %}
+    <h3>Q: {{ question }}</h3>
+    <h3>A: {{ answer }}</h3>
+    <h4>Response time (in ms): {{ response_time }}</h4>
+    <h4>Source documents (full content snippets):</h4>
+    <ul>
+      {% for doc in sources %}
+        <li>
+          <strong>Title:</strong> {{ doc.metadata.title }} |
+          <strong>Date:</strong> {{ doc.metadata.date }} |
+          <pre>{{ doc.page_content[:300]|e }}...</pre>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</body>
+</html>
